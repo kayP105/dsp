@@ -7,6 +7,8 @@ import PlannerDashboard from './features/planner/PlannerDashboard';
 import TaskInputPage from './features/tasks/TaskInputPage';
 import MainLayout from './components/layout/MainLayout';
 import LandingPage from './features/landing/LandingPage';
+// client/src/App.jsx
+import SettingsPage from './features/user/SettingsPage';
 
 // A simple component to protect routes
 const ProtectedRoute = ({ children }) => {
@@ -30,6 +32,7 @@ function App() {
           </ProtectedRoute>
         }
       >
+        <Route path="settings" element={<SettingsPage />} />
         <Route path="dashboard" element={<PlannerDashboard />} />
         <Route path="add-task" element={<TaskInputPage />} />
         {/* Add Progress, Settings pages here later */}

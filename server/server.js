@@ -1,47 +1,45 @@
 // server/server.js
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const jwt = a = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const app = express();
-const PORT = 5001; // Backend runs on a different port
-const JWT_SECRET = 'your-super-secret-key-for-jwt'; // Use a .env file in a real app
+const PORT = 5001;
+const JWT_SECRET = 'your-super-secret-key-for-jwt';
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// --- IN-MEMORY DATABASE (Replace with a real DB like PostgreSQL/MongoDB later) ---
-let users = {}; // { username: { password: '...' } }
-let tasks = {}; // { username: [ { id, subject, deadline, hours } ] }
+// --- IN-MEMORY DATABASE ---
+let users = {};
+let tasks = {};
 
 // --- AUTHENTICATION MIDDLEWARE ---
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) return res.sendStatus(401); // No token
+    if (token == null) return res.sendStatus(401);
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403); // Invalid token
+        if (err) return res.sendStatus(403);
         req.user = user;
         next();
     });
 };
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'Success! The backend test route is working!' });
-});
 
-// --- API ROUTES ---
-
-// 1. Authentication
+// --- AUTHENTICATION ROUTES ---
 app.post('/api/auth/signup', (req, res) => {
     const { username, password } = req.body;
     if (users[username]) {
         return res.status(400).json({ message: 'User already exists' });
     }
-    users[username] = { password };
+    users[username] = {
+      password,
+      availability: { '0': 2, '1': 2, '2': 2, '3': 2, '4': 2, '5': 4, '6': 4 }
+    };
     tasks[username] = [];
-    console.log('Users:', users);
     res.status(201).json({ message: 'User created successfully' });
 });
 
@@ -55,7 +53,33 @@ app.post('/api/auth/login', (req, res) => {
     res.json({ accessToken, username });
 });
 
-// 2. Task Management (Protected Route)
+// --- DATA ROUTES (Protected) ---
+
+app.post('/user/availability', authenticateToken, (req, res) => {
+    const { username } = req.user;
+    const { availability } = req.body;
+    if (!users[username]) return res.status(404).json({ message: 'User not found' });
+    
+    users[username].availability = availability;
+    res.status(200).json({ message: 'Availability updated successfully.' });
+});
+
+app.get('/api/subjects', authenticateToken, (req, res) => {
+    const userTasks = tasks[req.user.username] || [];
+    const subjectSet = new Set(userTasks.map(task => task.subject));
+    const uniqueSubjects = [...subjectSet];
+    res.json(uniqueSubjects);
+});
+
+// --- TASK MANAGEMENT ROUTES ---
+
+// GET Master Task List (for the sidebar)
+app.get('/api/tasks', authenticateToken, (req, res) => {
+    const userTasks = tasks[req.user.username] || [];
+    res.json(userTasks);
+});
+
+// CREATE a new Master Task
 app.post('/api/tasks', authenticateToken, (req, res) => {
     const { subject, deadline, hours } = req.body;
     if (!subject || !deadline || !hours) {
@@ -63,37 +87,65 @@ app.post('/api/tasks', authenticateToken, (req, res) => {
     }
     const newTask = { id: Date.now(), subject, deadline, hours: parseInt(hours), completed: false };
     tasks[req.user.username].push(newTask);
-    console.log('Tasks for', req.user.username, ':', tasks[req.user.username]);
     res.status(201).json(newTask);
 });
 
-// 3. Planner Generation (Protected Route)
+// DELETE a Master Task
+app.delete('/api/tasks/:id', authenticateToken, (req, res) => {
+    const { username } = req.user;
+    const taskId = parseInt(req.params.id, 10);
+    const userTasks = tasks[username] || [];
+    const taskIndex = userTasks.findIndex(task => task.id === taskId);
+
+    if (taskIndex === -1) {
+        return res.status(404).json({ message: 'Task not found' });
+    }
+    userTasks.splice(taskIndex, 1);
+    tasks[username] = userTasks;
+    res.status(200).json({ message: 'Task deleted successfully' });
+});
+
+// GET Scheduled Plan (for the calendar)
 app.get('/api/planner', authenticateToken, (req, res) => {
-    const userTasks = tasks[req.user.username];
-    
-    // --- DYNAMIC SCHEDULER V1 (Simple Version) ---
-    // This is the core logic you will enhance later.
-    // For now, it just calculates days remaining and hours per day.
-    
-    const plan = userTasks.map(task => {
-        const today = new Date();
-        const deadlineDate = new Date(task.deadline);
-        const timeDiff = deadlineDate.getTime() - today.getTime();
-        const daysRemaining = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24))); // Ensure at least 1 day
-        const hoursPerDay = (task.hours / daysRemaining).toFixed(2);
-        
-        return {
-            ...task,
-            daysRemaining,
-            hoursPerDay,
-        };
-    });
-    
-    // TODO: Implement the real adaptive scheduling algorithm here.
-    // It should create a day-by-day schedule, handle overdue tasks,
-    // and slot in revision sessions based on a forgetting curve model.
-    
-    res.json(plan);
+    const userTasks = tasks[req.user.username] || [];
+    const availability = users[req.user.username]?.availability || { '0':2, '1':2, '2':2, '3':2, '4':2, '5':4, '6':4 };
+    const studyBlocks = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (const task of userTasks) {
+        if (task.completed) continue;
+        const deadline = new Date(task.deadline);
+        let hoursToSchedule = task.hours;
+        const daysRemaining = Math.ceil((deadline - today) / (1000 * 3600 * 24));
+
+        for (let i = 0; i < daysRemaining && hoursToSchedule > 0; i++) {
+            const currentDay = new Date(today);
+            currentDay.setDate(today.getDate() + i);
+            const dayOfWeek = currentDay.getDay();
+            const availableHoursToday = availability[dayOfWeek] || 0;
+            
+            if (availableHoursToday > 0) {
+                const hoursForThisBlock = Math.min(hoursToSchedule, availableHoursToday);
+                const blockStart = new Date(currentDay);
+                blockStart.setHours(9, 0, 0, 0); 
+                const blockEnd = new Date(blockStart);
+                blockEnd.setHours(blockStart.getHours() + hoursForThisBlock);
+
+                studyBlocks.push({
+                    id: `${task.id}-${i}`,
+                    title: `${task.subject} (${hoursForThisBlock.toFixed(1)}hr session)`,
+                    start: blockStart.toISOString(),
+                    end: blockEnd.toISOString(),
+                    backgroundColor: '#748ffc',
+                    borderColor: '#748ffc',
+                    extendedProps: { taskId: task.id } // <-- CRITICAL: Links block to master task
+                });
+                hoursToSchedule -= hoursForThisBlock;
+            }
+        }
+    }
+    res.json(studyBlocks);
 });
 
 app.listen(PORT, () => {

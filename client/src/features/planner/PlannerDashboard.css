@@ -1,0 +1,14 @@
+.planner-dashboard {
+  height: 100%; /* Make the calendar fill its container */
+  width: 100%;
+}
+
+/* Override some default FullCalendar styles to match your theme */
+.fc .fc-button-primary {
+  background-color: #845ef7 !important; /* A nice purple */
+  border-color: #845ef7 !important;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: #e5dbff !important;
+}

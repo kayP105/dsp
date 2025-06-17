@@ -1,0 +1,22 @@
+.events-sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e9ecef;
+  padding: 1.5rem;
+  flex-shrink: 0; /* Prevents this sidebar from shrinking */
+}
+
+.events-sidebar h3 {
+  margin-top: 0;
+  color: #868e96;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.event-item {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-weight: 500;
+}

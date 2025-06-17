@@ -1,0 +1,57 @@
+/* client/src/components/layout/TasksSidebar.css */
+
+.tasks-sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-left: 1px solid #e9ecef;
+  padding: 1.5rem;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.tasks-sidebar h3 {
+  margin-top: 0;
+  color: #868e96;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.task-item {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: #f1f3f5;
+  border-radius: 4px;
+  border-left: 4px solid #4dabf7;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; /* <-- For positioning info and button */
+  justify-content: space-between; /* <-- Pushes items to ends */
+  align-items: center; /* <-- Vertically aligns them */
+}
+
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-item small {
+  display: block;
+  margin-top: 4px;
+  color: #868e96;
+  font-size: 0.8rem;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #adb5bd;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #e03131; /* Red on hover */
+  background-color: #fff5f5;
+}

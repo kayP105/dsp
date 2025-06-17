@@ -1,42 +1,53 @@
 // client/src/components/layout/MainLayout.jsx
 
-import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Outlet } from 'react-router-dom';
+import api from '../../lib/api';
+import MainNavigationSidebar from './MainNavigationSidebar';
+import EventsSidebar from './EventsSidebar';
+import TasksSidebar from './TasksSidebar';
+import './MainLayout.css';
 
 const MainLayout = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const [subjects, setSubjects] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const [subjectsResponse, tasksResponse] = await Promise.all([
+        api.get('/subjects'),
+        api.get('/tasks') // <-- Now fetches the raw master tasks list
+      ]);
+      setSubjects(subjectsResponse.data);
+      setTasks(tasksResponse.data);
+    } catch (error) {
+      console.error("Failed to fetch sidebar data", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // This function allows child components to trigger a full refresh of all data
+  const handleDataChange = () => {
+    fetchData();
   };
 
-  // If for any reason this layout renders while the user is still loading,
-  // this check prevents the crash.
-  if (!user) {
-    return <div>Loading user...</div>; // Or redirect, or return null
-  }
-
   return (
-    <div>
-      <nav>
-        <div>
-          <NavLink to="/app/dashboard">Dashboard</NavLink>
-          <NavLink to="/app/add-task">Add Task</NavLink>
-        </div>
-        <div>
-          {/* This line is now safe because of the 'if (!user)' check above */}
-          <span>Welcome, {user.username}</span>
-          <button onClick={handleLogout} style={{ marginLeft: '1rem', background: '#dc3545' }}>
-            Logout
-          </button>
-        </div>
-      </nav>
-      <main className="container">
-        <Outlet /> {/* Child routes will render here */}
+    <div className="main-layout">
+      <MainNavigationSidebar />
+      <EventsSidebar subjects={subjects} isLoading={isLoading} />
+      <main className="main-content-area">
+        {/* Pass the refresh function down to the routed component (PlannerDashboard) */}
+        <Outlet context={{ onDataChange: handleDataChange }} />
       </main>
+      {/* Pass data and the refresh function down to the TasksSidebar */}
+      <TasksSidebar tasks={tasks} isLoading={isLoading} onDataChange={handleDataChange} />
     </div>
   );
 };
