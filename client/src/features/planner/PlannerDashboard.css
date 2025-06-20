@@ -1,14 +1,93 @@
+/* client/src/features/planner/PlannerDashboard.css --- CUTE THEME --- */
+
 .planner-dashboard {
-  height: 100%; /* Make the calendar fill its container */
+  height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Override some default FullCalendar styles to match your theme */
+/* We don't need a separate header div, we can style the toolbar directly */
+.fc .fc-header-toolbar {
+  margin-bottom: 1.5rem !important;
+  padding: 0 0.5rem;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #3f3d56;
+}
+
+.fc-container {
+  flex-grow: 1;
+}
+
+.fc {
+  height: 100% !important;
+}
+
 .fc .fc-button-primary {
-  background-color: #845ef7 !important; /* A nice purple */
-  border-color: #845ef7 !important;
+  background-color: #e9e7f5 !important;
+  color: #595674 !important;
+  border: none !important;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+  box-shadow: none;
+}
+.fc .fc-button-primary:hover {
+  background-color: #d8d6e9 !important;
+}
+.fc .fc-button-primary.fc-button-active {
+  background-color: #4dabf7 !important;
+  color: white !important;
 }
 
-.fc .fc-daygrid-day.fc-day-today {
-  background-color: #e5dbff !important;
+.fc .fc-view-harness {
+  border: 1px solid #e9ecef;
+  border-radius: 16px;
+  background-color: white;
+}
+
+.fc .fc-col-header-cell-cushion {
+  font-weight: 500;
+  color: #adb5bd;
+}
+
+.fc .fc-day-today {
+  background-color: rgba(231, 245, 255, 0.6) !important;
+}
+
+.fc-event {
+  border-radius: 6px !important;
+  border: none !important;
+  font-weight: 600;
+  padding: 4px 8px;
+  opacity: 0.9;
+}
+
+.progress-event, .task-event {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+  color: inherit;
+}
+.event-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.checkbox {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.checkbox.checked {
+  background-color: currentColor;
 }

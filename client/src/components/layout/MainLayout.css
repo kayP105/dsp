@@ -1,12 +1,20 @@
+/* client/src/components/layout/MainLayout.css */
+
 .main-layout {
   display: flex;
-  height: 100vh; /* Make the layout take the full viewport height */
+  height: 100vh;
   width: 100vw;
-  background-color: #f8f9fa; /* A light background for the whole page */
+  /* A slightly warmer, softer white for the overall background */
+  background-color: #fdfdff; 
+  overflow: hidden;
 }
 
 .main-content-area {
-  flex-grow: 1; /* This makes the main content take up all available space */
-  padding: 2rem;
-  overflow-y: auto; /* Allow scrolling if content is too long */
+  flex-grow: 1;
+  /* Increase padding for a more spacious feel */
+  padding: 2.5rem; 
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }

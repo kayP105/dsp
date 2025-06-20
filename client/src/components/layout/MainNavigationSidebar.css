@@ -1,4 +1,4 @@
-/* client/src/components/layout/MainNavigationSidebar.css */
+/* client/src/components/layout/MainNavigationSidebar.css --- BLUE THEME --- */
 
 .main-nav-sidebar {
   width: 70px;
@@ -12,9 +12,8 @@
   flex-shrink: 0;
 }
 
-/* // V-- NEW STYLE FOR THE LOGO LINK --V */
 .logo-link {
-  text-decoration: none; /* Removes the default underline from the link */
+  text-decoration: none;
 }
 
 .app-logo {
@@ -45,9 +44,10 @@
   color: #495057;
 }
 
+/* This style is applied by React Router to the currently active link */
 .nav-link.active {
-  background-color: #e5dbff;
-  color: #845ef7;
+  background-color: #e7f5ff; /* Light Blue */
+  color: #1971c2; /* Dark Blue */
 }
 
 .logout-btn {

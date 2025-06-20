@@ -1,53 +1,67 @@
-// client/src/features/user/SettingsPage.jsx (New File)
+// client/src/features/user/SettingsPage.jsx
 
 import React, { useState } from 'react';
 import api from '../../lib/api';
+import './SettingsPage.css'; // We'll create this CSS file
 
-const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const initialAvailability = [
+  { day: 'Sunday', hours: 2, startTime: '13:00', endTime: '15:00', enabled: true },
+  { day: 'Monday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
+  { day: 'Tuesday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
+  { day: 'Wednesday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
+  { day: 'Thursday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
+  { day: 'Friday', hours: 4, startTime: '17:00', endTime: '21:00', enabled: true },
+  { day: 'Saturday', hours: 4, startTime: '10:00', endTime: '14:00', enabled: true },
+];
 
 const SettingsPage = () => {
-  const [availability, setAvailability] = useState({
-    0: 2, 1: 2, 2: 2, 3: 2, 4: 2, 5: 4, 6: 4 // Default hours
-  });
+  const [availability, setAvailability] = useState(initialAvailability);
   const [message, setMessage] = useState('');
 
-  const handleHoursChange = (dayIndex, hours) => {
-    setAvailability(prev => ({ ...prev, [dayIndex]: parseInt(hours) || 0 }));
+  const handleAvailabilityChange = (index, field, value) => {
+    const newAvailability = [...availability];
+    newAvailability[index][field] = value;
+    setAvailability(newAvailability);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // We need to create this backend endpoint next
       await api.post('/user/availability', { availability });
       setMessage('Availability saved successfully!');
     } catch (error) {
       setMessage('Failed to save availability.');
-      console.error(error);
     }
   };
 
   return (
-    <div className="card">
+    <div className="card page-fade-in">
       <h2>Your Weekly Availability</h2>
-      <p>Set how many hours per day you can dedicate to studying.</p>
+      <p>Set the time windows you are free to study each day.</p>
       <form onSubmit={handleSubmit}>
-        {daysOfWeek.map((day, index) => (
-          <div key={index} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-            <label>{day}</label>
-            <input
-              type="number"
-              min="0"
-              max="24"
-              value={availability[index]}
-              onChange={(e) => handleHoursChange(index, e.target.value)}
-              style={{ width: '100px' }}
-            />
-          </div>
-        ))}
-        <button type="submit">Save Availability</button>
+        <div className="availability-grid">
+          {availability.map((day, index) => (
+            <div key={index} className={`day-row ${!day.enabled ? 'disabled' : ''}`}>
+              <div className="day-name">
+                <input 
+                  type="checkbox" 
+                  checked={day.enabled}
+                  onChange={(e) => handleAvailabilityChange(index, 'enabled', e.target.checked)}
+                />
+                {day.day}
+              </div>
+              <div className="day-inputs">
+                <label>From:</label>
+                <input type="time" value={day.startTime} disabled={!day.enabled} onChange={(e) => handleAvailabilityChange(index, 'startTime', e.target.value)} />
+                <label>To:</label>
+                <input type="time" value={day.endTime} disabled={!day.enabled} onChange={(e) => handleAvailabilityChange(index, 'endTime', e.target.value)} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <button type="submit" style={{marginTop: '2rem'}}>Save Availability</button>
       </form>
-      {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
+      {message && <p style={{ marginTop: '1rem', fontWeight: 600 }}>{message}</p>}
     </div>
   );
 };

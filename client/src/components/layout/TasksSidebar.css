@@ -1,57 +1,59 @@
-/* client/src/components/layout/TasksSidebar.css */
+/* client/src/components/layout/TasksSidebar.css --- BLUE THEME --- */
 
 .tasks-sidebar {
-  width: 240px;
-  background-color: #ffffff;
+  width: 250px;
+  background-color: #f8f9fa;
   border-left: 1px solid #e9ecef;
   padding: 1.5rem;
   flex-shrink: 0;
   overflow-y: auto;
 }
-
 .tasks-sidebar h3 {
   margin-top: 0;
   color: #868e96;
   font-size: 0.9rem;
   letter-spacing: 1px;
 }
-
 .task-item {
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  background-color: #f1f3f5;
-  border-radius: 4px;
-  border-left: 4px solid #4dabf7;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border-left: 4px solid #4dabf7; /* Primary Blue */
   font-weight: 500;
-  cursor: pointer;
-  display: flex; /* <-- For positioning info and button */
-  justify-content: space-between; /* <-- Pushes items to ends */
-  align-items: center; /* <-- Vertically aligns them */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
-
 .task-info {
   display: flex;
   flex-direction: column;
+  gap: 0.3rem;
 }
-
-.task-item small {
-  display: block;
-  margin-top: 4px;
+.task-subject {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #343a40;
+}
+.task-details, .task-deadline {
   color: #868e96;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
-
+.task-deadline {
+  font-weight: 500;
+  color: #495057;
+}
 .delete-btn {
   background: none;
   border: none;
   color: #adb5bd;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border-radius: 4px;
   transition: all 0.2s ease;
+  margin-top: -4px;
 }
-
 .delete-btn:hover {
-  color: #e03131; /* Red on hover */
+  color: #e03131;
   background-color: #fff5f5;
 }

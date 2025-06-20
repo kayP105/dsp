@@ -1,0 +1,76 @@
+/* client/src/features/report/ReportPage.css */
+.report-summary {
+  background-color: #f3f0ff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.report-summary h3 {
+  margin: 0;
+  color: #5f3dc4;
+  font-weight: 600;
+}
+.report-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2.5rem;
+}
+.add-grade-form h3, .grades-list h3 {
+  margin-top: 0;
+  color: #495057;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.add-grade-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.score-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.score-inputs span {
+  font-weight: 600;
+  color: #868e96;
+}
+.add-grade-form button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #845ef7;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.add-grade-form button:hover {
+    background-color: #7048e8;
+}
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.grades-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.grades-list th, .grades-list td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+.grades-list th {
+  color: #868e96;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}

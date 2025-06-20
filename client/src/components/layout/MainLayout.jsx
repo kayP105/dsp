@@ -9,45 +9,42 @@ import TasksSidebar from './TasksSidebar';
 import './MainLayout.css';
 
 const MainLayout = () => {
-  const [subjects, setSubjects] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [manualEvents, setManualEvents] = useState([]); // State for the Events sidebar
+  const [tasks, setTasks] = useState([]);             // State for the Tasks sidebar
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchData = useCallback(async () => {
+  const fetchDataForSidebars = useCallback(async () => {
     setIsLoading(true);
     try {
-      const [subjectsResponse, tasksResponse] = await Promise.all([
-        api.get('/subjects'),
-        api.get('/tasks') // <-- Now fetches the raw master tasks list
+      // Fetch both the manual events list and the tasks list
+      const [eventsResponse, tasksResponse] = await Promise.all([
+        api.get('/events'), // We will create this new endpoint
+        api.get('/tasks')
       ]);
-      setSubjects(subjectsResponse.data);
+      
+      setManualEvents(eventsResponse.data);
       setTasks(tasksResponse.data);
+
     } catch (error) {
-      console.error("Failed to fetch sidebar data", error);
+      console.error("Failed to fetch layout data:", error);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  // This function allows child components to trigger a full refresh of all data
-  const handleDataChange = () => {
-    fetchData();
-  };
+    fetchDataForSidebars();
+  }, [fetchDataForSidebars]);
 
   return (
     <div className="main-layout">
       <MainNavigationSidebar />
-      <EventsSidebar subjects={subjects} isLoading={isLoading} />
+      {/* Pass the list of manual events to the EventsSidebar */}
+      <EventsSidebar events={manualEvents} isLoading={isLoading} />
       <main className="main-content-area">
-        {/* Pass the refresh function down to the routed component (PlannerDashboard) */}
-        <Outlet context={{ onDataChange: handleDataChange }} />
+        <Outlet context={{ onDataChange: fetchDataForSidebars }} />
       </main>
-      {/* Pass data and the refresh function down to the TasksSidebar */}
-      <TasksSidebar tasks={tasks} isLoading={isLoading} onDataChange={handleDataChange} />
+      <TasksSidebar tasks={tasks} isLoading={isLoading} onDataChange={fetchDataForSidebars} />
     </div>
   );
 };

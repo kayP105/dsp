@@ -1,22 +1,39 @@
-.events-sidebar {
-  width: 240px;
-  background-color: #ffffff;
-  border-right: 1px solid #e9ecef;
-  padding: 1.5rem;
-  flex-shrink: 0; /* Prevents this sidebar from shrinking */
+/* In EventsSidebar.css & TasksSidebar.css */
+
+.events-sidebar, .tasks-sidebar {
+  width: 250px;
+  background-color: #f7f7ff; /* A very light pastel background for sidebars */
+  border-right: 1px solid #e9e7f5; /* Softer border color */
+  padding: 2.5rem 1.5rem;
+  flex-shrink: 0;
 }
 
-.events-sidebar h3 {
+.tasks-sidebar {
+  border-right: none;
+  border-left: 1px solid #e9e7f5;
+}
+
+.events-sidebar h3, .tasks-sidebar h3 {
   margin-top: 0;
-  color: #868e96;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
+  color: #8674e8; /* Softer, muted title color */
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
 }
 
-.event-item {
-  padding: 0.75rem;
+.event-item, .task-item {
+  /* Remove individual item backgrounds for a cleaner look */
+  padding: 0.75rem 0.5rem;
   margin-bottom: 0.5rem;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  font-weight: 500;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #b6b1e3;
+  border-left: 4px solid #d8d6e9; /* A neutral pastel border */
+  transition: background-color 0.2s ease;
+}
+
+.event-item:hover, .task-item:hover {
+  background-color: #efedff; /* Light lavender hover */
 }

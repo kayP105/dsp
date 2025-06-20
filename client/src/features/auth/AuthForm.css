@@ -50,3 +50,30 @@ body {
 .page-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* client/src/features/auth/AuthForm.css */
+
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.auth-form-wrapper {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ... (the rest of the styles for the form) ... */

@@ -1,0 +1,122 @@
+/* client/src/features/landing/LandingPage.css */
+
+
+.landing-page {
+  min-height: 100vh;
+  background-color: #f3f0ff; /* The base background color */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #343a40;
+
+
+  /* --- CRITICAL: These properties set up the layering context --- */
+  position: relative; /* Allows child elements to be positioned relative to this */
+  overflow: hidden;   /* Prevents scrollbars from the animated canvas */
+}
+
+
+/* --- Header Styles --- */
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 5%;
+  border-bottom: 1px solid #e9ecef;
+ 
+  /* --- CRITICAL: These properties place the header ON TOP of the background --- */
+  position: relative; /* Must have a position other than 'static' for z-index to work */
+  z-index: 1;         /* A higher z-index means it's closer to the viewer */
+  background-color: #f3f0ff; /* Give the header the same bg color to be opaque */
+}
+
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #495057;
+}
+
+
+/* --- Hero Section Styles --- */
+.hero-section {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem;
+ 
+  /* --- CRITICAL: These properties place the hero content ON TOP of the background --- */
+  position: relative;
+  z-index: 1;
+}
+
+
+.hero-content {
+  max-width: 800px;
+}
+
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+  color: #212529;
+}
+
+
+.highlight-text {
+  color: #20c997;
+}
+
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: #495057;
+  margin: 1.5rem 0 2.5rem 0;
+}
+
+
+/* --- Button Styles --- */
+
+
+.hero-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+.hero-button {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+
+.hero-button.primary {
+    background-color: #845ef7;
+    color: #fff;
+}
+
+
+.hero-button.primary:hover {
+    background-color: #7048e8;
+    transform: translateY(-2px);
+}
+
+
+.hero-button.secondary {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+
+.hero-button.secondary:hover {
+    background-color: #dee2e6;
+    transform: translateY(-2px);
+}
