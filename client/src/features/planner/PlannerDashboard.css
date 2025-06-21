@@ -1,77 +1,148 @@
-/* client/src/features/planner/PlannerDashboard.css --- CUTE THEME --- */
+/* --- CUTE PlannerDashboard.css (Final Version) --- */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600;700&display=swap');
 
-.planner-dashboard {
-  height: 100%;
+/* --- Planner Dashboard Layout --- */
+.planner-dashboard-content {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 0;
+}
+
+.planner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #bde0fe;
+  padding: 0.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+.koala-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+}
+.user-icon {
+  font-style: normal;
+}
+
+/* --- Calendar Container --- */
+.calendar-container {
+  flex-grow: 1;
+  min-height: 0; /* Critical for calendar to be scrollable if needed */
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(189, 224, 254, 0.5);
   display: flex;
   flex-direction: column;
 }
 
-/* We don't need a separate header div, we can style the toolbar directly */
-.fc .fc-header-toolbar {
-  margin-bottom: 1.5rem !important;
-  padding: 0 0.5rem;
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  color: #22223b;
 }
 
-.fc .fc-toolbar-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #3f3d56;
-}
-
-.fc-container {
-  flex-grow: 1;
-}
-
+/* --- FullCalendar Styles (Cute Theme) --- */
 .fc {
   height: 100% !important;
-}
-
-.fc .fc-button-primary {
-  background-color: #e9e7f5 !important;
-  color: #595674 !important;
   border: none !important;
-  border-radius: 10px;
-  font-weight: 600;
-  text-transform: capitalize;
-  box-shadow: none;
-}
-.fc .fc-button-primary:hover {
-  background-color: #d8d6e9 !important;
-}
-.fc .fc-button-primary.fc-button-active {
-  background-color: #4dabf7 !important;
-  color: white !important;
 }
 
-.fc .fc-view-harness {
-  border: 1px solid #e9ecef;
-  border-radius: 16px;
-  background-color: white;
+/* client/src/features/planner/PlannerDashboard.css */
+.calendar-container { 
+  flex-grow: 1; min-height: 0; background-color: #fff;
+  border-radius: 24px; padding: 2rem;
+  border: 3px solid #b3e5fc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex; flex-direction: column;
 }
-
+.fc .fc-toolbar-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 3rem !important;
+  color: #01579b !important;
+  border-bottom: 2px solid #e0f7ff;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
 .fc .fc-col-header-cell-cushion {
-  font-weight: 500;
-  color: #adb5bd;
+  background-color: #ffffff; /* Soft pink */
+  color: #880e4f; /* Dark pink text */
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+}
+/* ... The rest of your .fc styles for event colors etc. can remain the same */
+.fc .fc-col-header {
+  padding-bottom: 10px;
 }
 
+/* Day Cell Styles */
+.fc .fc-daygrid-day {
+  border-radius: 12px;
+  transition: background 0.2s ease-in-out;
+  border-color: #f1f7ff !important;
+}
+.fc .fc-daygrid-day:hover {
+  background: #f1f7ff;
+}
 .fc .fc-day-today {
-  background-color: rgba(231, 245, 255, 0.6) !important;
+  background: #d0e5ff !important;
 }
 
+/* --- EVENT STYLING --- */
 .fc-event {
-  border-radius: 6px !important;
   border: none !important;
-  font-weight: 600;
-  padding: 4px 8px;
+  border-radius: 8px !important;
+  font-family: 'Caveat';
+  font-size: 1.2rem;
+  padding: 4px 8px !important;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.fc-event.task-style {
+  background-color: #a9c1ff;
+  color: #2a3a6b !important;
+}
+.fc-event.manual-style {
+  background-color: #ffffff;
+  color: #7d3a3a !important;
+}
+.fc-event.task-completed {
+  background-color: #a7d8a9 !important;
+  color: #2b6b34 !important;
   opacity: 0.9;
 }
+.fc-event.task-completed .event-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
 
+/* --- Event Content --- */
 .progress-event, .task-event {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
   width: 100%;
   color: inherit;
 }
@@ -79,6 +150,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 700;
 }
 .checkbox {
   flex-shrink: 0;
@@ -87,7 +159,16 @@
   border: 2px solid;
   border-radius: 4px;
   transition: background-color 0.2s;
+  background-color: transparent;
+  position: relative;
+  top: 4px;
 }
 .checkbox.checked {
   background-color: currentColor;
+}
+
+/* --- NEW STYLE FOR DEADLINE --- */
+.fc-event.deadline-event {
+  border: 2px dashed #e03131 !important; /* A red dashed border to indicate urgency */
+  font-weight: bold !important;
 }

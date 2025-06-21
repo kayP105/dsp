@@ -1,20 +1,39 @@
-/* client/src/components/layout/MainLayout.css */
-
-.main-layout {
+.shell {
   display: flex;
   height: 100vh;
   width: 100vw;
-  /* A slightly warmer, softer white for the overall background */
-  background-color: #fdfdff; 
+  background-color: #e3f0ff; /* The overall page background */
   overflow: hidden;
 }
 
-.main-content-area {
+.main-layout-grid-cute {
   flex-grow: 1;
-  /* Increase padding for a more spacious feel */
-  padding: 2.5rem; 
-  height: 100vh;
+  padding: 1.5rem;
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 240px 1fr 280px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 
+    "profile main right-col"
+    "events  main right-col";
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+.grid-nav { flex-shrink: 0; }
+.grid-profile { grid-area: profile; }
+.grid-events { grid-area: events; min-height: 0; }
+.grid-main {
+  grid-area: main;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.grid-right-column {
+  grid-area: right-col; 
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 0;
 }

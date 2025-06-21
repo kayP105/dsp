@@ -3,17 +3,17 @@
 
 /* --- GLOBAL BODY STYLES --- */
 /* These styles apply to the entire application */
+/* client/src/index.css */
 body {
   margin: 0;
-  /* Use a modern, clean font stack. 'Inter' is a good choice if you want to add it. */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f8f9fa; /* A very light gray for the app's main background */
-  color: #343a40; /* A dark gray for text, which is easier on the eyes than pure black */
+  /* Use 'Poppins' as the main font. It's clean and modern. */
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f7faff; /* A slightly different, cleaner light blue */
+  color: #495057; /* A softer dark grey for text */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
+/* ... (keep other styles like .card and .page-fade-in) */
 /* --- REUSABLE UTILITY CLASSES --- */
 
 

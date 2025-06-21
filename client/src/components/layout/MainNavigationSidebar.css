@@ -1,23 +1,33 @@
-/* client/src/components/layout/MainNavigationSidebar.css --- BLUE THEME --- */
+/* client/src/components/layout/MainNavigationSidebar.css */
 
 .main-nav-sidebar {
   width: 70px;
-  background-color: #ffffff;
-  border-right: 1px solid #e9ecef;
+  height: 100vh; /* Make it take the full height of the viewport */
+  background-color: #ffffff; /* A clean white background */
   padding: 1.5rem 0;
+  box-sizing: border-box; /* Ensures padding is included in the height calculation */
+  
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
+  
+  /* A soft border to separate it from the main content grid */
+  border-right: 1px solid #dbe4ff; 
+  flex-shrink: 0; /* Prevents this sidebar from shrinking */
+  z-index: 10; /* Ensures it sits above other content if there are overlaps */
 }
 
 .logo-link {
   text-decoration: none;
+  margin-bottom: 2rem; /* Space below the logo */
 }
 
-.app-logo {
-  margin-bottom: 2rem;
+.app-logo svg {
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo-link:hover .app-logo svg {
+  transform: rotate(15deg) scale(1.1); /* Fun little hover effect on the logo */
 }
 
 .nav-links-group {
@@ -25,33 +35,37 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  color: #868e96;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px; /* Softer, more modern corners */
+  color: #a1a8b3; /* A soft, neutral grey for inactive icons */
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
 
 .nav-link:hover {
-  background-color: #f1f3f5;
-  color: #495057;
+  background-color: #e3f0ff; /* The light blue from your page background */
+  color: #1971c2; /* A stronger blue for hover */
 }
 
 /* This style is applied by React Router to the currently active link */
 .nav-link.active {
-  background-color: #e7f5ff; /* Light Blue */
-  color: #1971c2; /* Dark Blue */
+  background-color: #3b5bdb; /* The main dark blue accent color */
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(59, 91, 219, 0.3);
 }
 
 .logout-btn {
     background: none;
     border: none;
     cursor: pointer;
+    /* This flexbox trick pushes the logout button to the absolute bottom */
+    margin-top: auto; 
 }

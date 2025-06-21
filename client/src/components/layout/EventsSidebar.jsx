@@ -1,28 +1,17 @@
-// client/src/components/layout/EventsSidebar.jsx
 import React from 'react';
-import './EventsSidebar.css';
+import './Sidebars.css';
 
 const EventsSidebar = ({ events, isLoading }) => {
-  const renderContent = () => {
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-    if (!events || events.length === 0) {
-      return <p>No events yet.</p>;
-    }
-    return events.map((event) => (
-      <div key={event.id} className="event-item">
-        {event.title}
-      </div>
-    ));
-  };
-
   return (
-    <aside className="events-sidebar">
-      <h3>EVENTS</h3>
-      {renderContent()}
+    <aside className="info-panel-cute">
+      <h3>Events</h3>
+      <div className="panel-content">
+        {isLoading ? <p className="loading-message">...</p> : 
+         !events || events.length === 0 ? <p className="no-items-message">No events.</p> :
+         events.map(event => <div key={event.id} className="event-item-cute">{event.title}</div>)
+        }
+      </div>
     </aside>
   );
 };
-
 export default EventsSidebar;

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;500;600&display=swap');
+
+/* --- Base Style for All Panels --- */
+.info-panel-cute {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(189, 224, 254, 0.5);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 2px solid white;
+}
+.info-panel-cute h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #01579b;
+  margin: 0 auto 1.5rem auto;
+  background-color: #e3f0ff;
+  border-radius: 50px;
+  padding: 0.2rem 2rem;
+  display: inline-block;
+}
+.panel-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 5px; /* space for scrollbar */
+}
+.loading-message, .no-items-message {
+  text-align: center; color: #868e96; padding-top: 2rem; font-style: italic; font-family: 'Poppins', sans-serif;
+}
+
+/* --- Profile Box --- */
+.profile-box { align-items: center; gap: 0.5rem; padding: 1rem; text-align: center; }
+.profile-koala { width: 90px; height: 90px; margin-bottom: 0.5rem; }
+.profile-username { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.1rem; color: #22223b; }
+
+/* --- Events Sidebar --- */
+.event-item-cute {
+  padding: 0.75rem; margin-bottom: 0.5rem; font-weight: 500; font-family: 'Poppins', sans-serif;
+  color: #c92a2a; background-color: #fff0f6; border-radius: 8px;
+}
+
+/* --- Tasks Sidebar --- */
+.task-item-cute {
+  background-color: #f1f7ff; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
+  display: flex; justify-content: space-between; align-items: flex-start; font-family: 'Poppins', sans-serif;
+}
+.task-info { display: flex; flex-direction: column; gap: 0.3rem; }
+.task-subject { font-weight: 600; color: #343a40; }
+.task-details, .task-deadline { color: #868e96; font-size: 0.85rem; }
+.delete-btn { background: none; border: none; color: #adb5bd; cursor: pointer; padding: 0.25rem; }
+.delete-btn:hover { color: #e03131; }
+
+/* --- Today's Tasks Box --- */
+.today-tasks-box { flex-shrink: 0; }
+.today-task-item-cute {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 0.75rem; border-radius: 10px;
+  font-family: 'Poppins', sans-serif; font-weight: 500; color: #343a40;
+  cursor: pointer; background-color: #fff; margin-bottom: 0.75rem;
+  border: 1px solid #e3f0ff;
+}
+.today-task-item-cute:hover { background-color: #f1f7ff; }
+.today-task-actions { display: flex; gap: 0.5rem; }
+.action-btn { width: 28px; height: 28px; border-radius: 50%; border: none; cursor: pointer; }
+.action-btn.check { background-color: #69db7c; }
+.action-btn.cross { background-color: #ff8787; }
