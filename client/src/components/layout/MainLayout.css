@@ -1,8 +1,10 @@
+/* client/src/components/layout/MainLayout.css */
+
 .shell {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background-color: #e3f0ff; /* The overall page background */
+  background-color: #e3f0ff;
   overflow: hidden;
 }
 
@@ -12,9 +14,10 @@
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 240px 1fr 280px;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr; /* <-- CHANGE THIS */
   grid-template-areas: 
     "profile main right-col"
+    "actions main right-col" /* <-- NEW AREA */
     "events  main right-col";
   gap: 1.5rem;
   overflow: hidden;
@@ -22,6 +25,7 @@
 
 .grid-nav { flex-shrink: 0; }
 .grid-profile { grid-area: profile; }
+.grid-actions { grid-area: actions; } /* <-- NEW STYLE */
 .grid-events { grid-area: events; min-height: 0; }
 .grid-main {
   grid-area: main;
@@ -36,4 +40,25 @@
   flex-direction: column;
   gap: 1.5rem;
   min-height: 0;
+}
+
+/* NEW ACTION BOX STYLE */
+.action-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 24px;
+  text-decoration: none;
+  color: #845ef7;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(189, 224, 254, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.action-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(132, 94, 247, 0.3);
 }

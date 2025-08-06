@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaPlus, FaCog, FaSignOutAlt, FaCalendarAlt, FaChartBar } from 'react-icons/fa';
+import { FaPlus, FaCog, FaSignOutAlt, FaCalendarAlt, FaChartBar, FaBrain } from 'react-icons/fa'; // <-- ADD FaBrain
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../../assets/icons/Logo';
 import './MainNavigationSidebar.css';
 
 const MainNavigationSidebar = () => {
@@ -13,15 +14,17 @@ const MainNavigationSidebar = () => {
     <div className="main-nav-sidebar">
       <NavLink to="/app/dashboard" className="logo-link" title="Dashboard">
         <div className="app-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 19V5C4 3.89543 4.89543 3 6 3H18C19.1046 3 20 3.89543 20 5V19L12 14L4 19Z" fill="#845ef7"/>
-          </svg>
+          <Logo size={24} />
         </div>
       </NavLink>
 
       <div className="nav-links-group">
         <NavLink to="/app/dashboard" className="nav-link" title="Dashboard">
           <FaCalendarAlt size={20} />
+        </NavLink>
+        {/* NEW LINK FOR AI HELP */}
+        <NavLink to="/app/gemini-help" className="nav-link" title="Study Assistant">
+          <FaBrain size={20} />
         </NavLink>
         <NavLink to="/app/report" className="nav-link" title="Grade Report">
           <FaChartBar size={20} />

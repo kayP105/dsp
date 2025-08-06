@@ -1,5 +1,7 @@
+// client/src/components/layout/MainLayout.jsx
+
 import React, { useState, useEffect, useCallback } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import api from '../../lib/api';
 import MainNavigationSidebar from './MainNavigationSidebar';
 import EventsSidebar from './EventsSidebar';
@@ -7,6 +9,7 @@ import TasksSidebar from './TasksSidebar';
 import TodaysTasks from './TodayTasks';
 import ProfileBox from './ProfileBox';
 import './MainLayout.css';
+import { FaClock } from 'react-icons/fa';
 
 const MainLayout = () => {
   const [user, setUser] = useState(null);
@@ -48,9 +51,16 @@ const MainLayout = () => {
         <div className="grid-profile">
           <ProfileBox user={user} isLoading={isLoading} />
         </div>
+        <div className="grid-actions">
+           <Link to="/app/focus-timer" className="action-box">
+             <FaClock size={24} />
+             <span>Focus Mode</span>
+           </Link>
+        </div>
         <div className="grid-events">
           <EventsSidebar events={manualEvents} isLoading={isLoading} />
         </div>
+        {/* THE FIX IS HERE: Restoring className="grid-main" */}
         <main className="grid-main">
           <Outlet context={{ events: plannerEvents, onDataChange: fetchDataForLayout, isLoading }} />
         </main>

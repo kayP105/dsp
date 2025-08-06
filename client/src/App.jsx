@@ -11,6 +11,8 @@ import SettingsPage from './features/user/SettingsPage';
 import ReportPage from './features/report/ReportPage';
 import MainLayout from './components/layout/MainLayout';
 import LandingPage from './features/landing/LandingPage';
+import FocusTimerPage from './features/timer/FocusTimerPage'; // <-- NEW IMPORT
+import GeminiHelpPage from './features/ai/GeminiHelpPage';   // <-- NEW IMPORT
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useAuth();
@@ -28,6 +30,8 @@ function App() {
         <Route path="add-task" element={<TaskInputPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="report" element={<ReportPage />} />
+        <Route path="focus-timer" element={<FocusTimerPage />} /> {/* <-- NEW ROUTE */}
+        <Route path="gemini-help" element={<GeminiHelpPage />} /> {/* <-- NEW ROUTE */}
         <Route index element={<Navigate to="dashboard" />} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />

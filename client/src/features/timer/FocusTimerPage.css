@@ -1,0 +1,89 @@
+/* client/src/features/timer/FocusTimerPage.css */
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.visual-timer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.visual-timer svg {
+  transform: rotate(-90deg);
+}
+
+.timer-bg, .timer-progress {
+  fill: none;
+  stroke-width: 10;
+}
+
+.timer-bg {
+  stroke: #e3f0ff;
+}
+
+.timer-progress {
+  stroke: #845ef7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s linear;
+}
+
+.timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #343a40;
+  font-family: 'Poppins', sans-serif;
+}
+
+.timer-setup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.timer-setup label {
+  font-weight: 500;
+}
+
+.timer-setup input {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  width: 60px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.timer-controls button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #845ef7;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.timer-controls button:hover:not(:disabled) {
+  background-color: #7048e8;
+}
+
+.timer-controls button:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+}

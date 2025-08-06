@@ -1,57 +1,5 @@
-/* client/src/index.css */
-
-
-/* --- GLOBAL BODY STYLES --- */
-/* These styles apply to the entire application */
-body {
-  margin: 0;
-  /* Use a modern, clean font stack. 'Inter' is a good choice if you want to add it. */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f8f9fa; /* A very light gray for the app's main background */
-  color: #343a40; /* A dark gray for text, which is easier on the eyes than pure black */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
-/* --- REUSABLE UTILITY CLASSES --- */
-
-
-/* A generic card style for simple content pages like Settings or Add Task */
-.card {
-  background: white;
-  border-radius: 12px; /* A slightly more modern, softer corner */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* A softer shadow */
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-  max-width: 700px; /* Constrain width on larger screens */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* --- GLOBAL ANIMATIONS --- */
-
-
-/* Define the fade-in animation keyframes */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-/* A utility class to apply the fade-in animation to any page */
-.page-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
 /* client/src/features/auth/AuthForm.css */
+
 
 .auth-container {
   display: flex;
@@ -59,10 +7,11 @@ body {
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  position: relative;
+  position: relative; /* For the background canvas */
   overflow: hidden;
-  background-color: #f8f9fa;
+  background-color: #f8f9fa; /* Fallback color */
 }
+
 
 .auth-form-wrapper {
   background-color: white;
@@ -72,8 +21,122 @@ body {
   width: 100%;
   max-width: 450px;
   text-align: center;
-  position: relative;
+  position: relative; /* To sit on top of the background */
   z-index: 1;
 }
 
-/* ... (the rest of the styles for the form) ... */
+
+.auth-logo {
+  margin-bottom: 1.5rem;
+}
+
+
+.auth-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 2rem;
+}
+
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+/* --- Floating Label Input Styles --- */
+.input-group {
+  position: relative;
+}
+
+
+.form-input {
+  width: 100%;
+  padding: 1.25rem 1rem 0.5rem 1rem; /* Padding top for the label */
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.2s;
+}
+
+
+.form-input:focus {
+  outline: none;
+  border-color: #845ef7; /* Purple border on focus */
+}
+
+
+/* The label itself */
+.form-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: #868e96;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+}
+
+
+/* This is the magic: when the input is focused OR not empty, move the label up */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: 0.3rem;
+  font-size: 0.75rem;
+  color: #845ef7;
+}
+
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #adb5bd;
+}
+
+
+.forgot-password-link {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #845ef7;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: -1rem; /* Pull it closer to the password field */
+}
+
+
+.auth-button {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #845ef7;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+.auth-button:hover {
+  background-color: #7048e8;
+}
+
+
+.secondary-action {
+  margin-top: 2rem;
+  border-top: 1px solid #e9ecef;
+  padding-top: 1.5rem;
+}
+
+
+.secondary-action a {
+  color: #845ef7;
+  text-decoration: none;
+  font-weight: 500;
+}

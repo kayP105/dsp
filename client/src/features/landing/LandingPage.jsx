@@ -4,17 +4,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/icons/Logo';
-import Squares from '../../components/ui/Squares'; // Import the animated background
+import Squares from '../../components/ui/Squares';
+import BlurText from '../../components/ui/BlurText'; // Import your animation component
 import './LandingPage.css';
 
 
 const LandingPage = () => {
   return (
     <div className="landing-page">
-      {/*
-        The Squares component is placed here. The CSS will position it
-        as a background layer behind all the other content.
-      */}
       <Squares
         speed={0.4}
         borderColor="#e5dbff"
@@ -23,25 +20,48 @@ const LandingPage = () => {
       />
 
 
-      {/* --- Header/Navbar (Simplified) --- */}
       <header className="landing-header">
         <div className="logo-container">
           <Logo />
           <span>StudyPlanner</span>
         </div>
-        {/* Empty nav to keep the layout consistent */}
-       
       </header>
 
 
-      {/* --- Hero Section --- */}
       <main className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">
-            Finally,
-            <br />
-            A Study Planner That <span className="highlight-text">Gets You</span>
-          </h1>
+         
+          {/* --- THIS IS THE NEW STRUCTURE FOR THE TITLE --- */}
+          <div className="hero-title-container">
+            <BlurText
+              className="hero-title"
+              text="Finally,"
+              animateBy="words" // Animate as a single word
+              delay={200} // <-- INCREASED from 100ms to 200ms
+              stepDuration={0.25}
+              justify="center"
+            />
+            <BlurText
+              className="hero-title"
+              text="A Study Planner That"
+              animateBy="words"
+              delay={200} // <-- INCREASED from 100ms to 200ms
+              stepDuration={0.25}
+              justify="center"
+            />
+            {/* For the highlighted part, we wrap BlurText in its own styled div */}
+            <div className="highlight-container">
+              <BlurText
+                className="hero-title highlight-text" // Apply both classes
+                text="Gets You"
+                animateBy="words"
+                delay={200} // <-- INCREASED from 100ms to 200ms
+                stepDuration={0.25}
+                justify="center"
+              />
+            </div>
+          </div>
+         
           <p className="hero-subtitle">
             Grades. Friends. Freedom.
           </p>

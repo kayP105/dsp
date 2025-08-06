@@ -10,7 +10,6 @@ import interactionPlugin from '@fullcalendar/interaction';
 import './PlannerDashboard.css';
 
 const PlannerDashboard = () => {
-  // Get everything from the parent layout, removing redundant local state and fetches
   const { events, isLoading, onDataChange } = useOutletContext();
 
   const handleEventClick = async (clickInfo) => {
@@ -32,7 +31,6 @@ const PlannerDashboard = () => {
             hours,
             completed: !isComplete
           });
-          // Tell the main layout to refresh all data for perfect sync
           onDataChange();
         } catch (error) {
           alert('Could not sync with the server. Please try again.');
@@ -44,6 +42,8 @@ const PlannerDashboard = () => {
   
   const renderEventContent = (eventInfo) => {
     const { type, isComplete } = eventInfo.event.extendedProps;
+    
+    // Logic for our custom task events
     if (type === 'task') {
       return (
         <div className="task-event-wrapper">
@@ -52,7 +52,15 @@ const PlannerDashboard = () => {
         </div>
       );
     }
-    return <div className="manual-event-wrapper"><i>{eventInfo.event.title}</i></div>;
+    
+    // For manual events or deadline markers, let FullCalendar handle it,
+    // but we can add our own wrapper if we want.
+    // This will show the title of manual events like "Team Meeting".
+    return (
+      <div className="manual-event-wrapper">
+        <i>{eventInfo.event.title}</i>
+      </div>
+    );
   };
 
   if (isLoading) {
@@ -64,11 +72,25 @@ const PlannerDashboard = () => {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        headerToolbar={{ left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek' }}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay' // Add day view
+        }}
         events={events}
         eventClick={handleEventClick}
-        eventContent={renderEventContent}
+        eventContent={renderEventContent} // Use our custom render function
         height="100%"
+        // Add this to make sure the green color is applied!
+        eventClassNames={(arg) => {
+            if (arg.event.extendedProps.isComplete) {
+                return ['task-completed'];
+            }
+            if (arg.event.extendedProps.type === 'deadline') {
+                return ['deadline-event-style'];
+            }
+            return [];
+        }}
       />
     </div>
   );

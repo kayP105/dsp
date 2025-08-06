@@ -1,29 +1,50 @@
-/* client/src/features/report/ReportPage.css */
-.report-summary {
-  background-color: #f3f0ff;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
+/* client/src/features/report/ReportPage.css --- NEW LAYOUT --- */
+
+.report-page-layout .card {
+  max-width: 900px; /* Allow the card to be wider */
 }
-.report-summary h3 {
-  margin: 0;
-  color: #5f3dc4;
-  font-weight: 600;
-}
-.report-content {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 2.5rem;
-}
-.add-grade-form h3, .grades-list h3 {
-  margin-top: 0;
-  color: #495057;
-  border-bottom: 1px solid #e9ecef;
-  padding-bottom: 0.75rem;
+
+.report-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
 }
-.add-grade-form input {
+
+.report-main-header h2 {
+  margin: 0;
+}
+
+.add-grade-button {
+  background-color: #845ef7;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-grade-button:hover {
+  background-color: #7048e8;
+  transform: translateY(-1px);
+}
+
+.add-grade-form-popup {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+}
+
+.add-grade-form-popup h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.add-grade-form-popup input {
   width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
@@ -31,46 +52,140 @@
   border-radius: 8px;
   box-sizing: border-box;
 }
-.score-inputs {
+
+.add-grade-form-popup .score-inputs {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.score-inputs span {
+
+.add-grade-form-popup .score-inputs span {
   font-weight: 600;
   color: #868e96;
 }
-.add-grade-form button {
+
+.add-grade-form-popup button {
   width: 100%;
   padding: 0.75rem;
+  margin-top: 0.5rem;
   border: none;
   border-radius: 8px;
-  background-color: #845ef7;
+  background-color: #2f9e44;
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
-.add-grade-form button:hover {
-    background-color: #7048e8;
+
+.report-summary {
+  background-color: #f3f0ff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
+
+.report-summary h3 {
+  margin: 0;
+  color: #5f3dc4;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.semesters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.no-grades-message {
+  text-align: center;
+  color: #868e96;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* --- Accordion Styles --- */
+.semester-accordion {
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  width: 100%;
+  background-color: #fff;
+  border: none;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+}
+
+.accordion-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #343a40;
+}
+
+.accordion-header span {
+  font-weight: 600;
+  color: #495057;
+}
+
+.accordion-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.accordion-icon.open {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+}
+
+.semester-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
 .table-container {
-    max-height: 400px;
-    overflow-y: auto;
+  max-height: 300px; /* Give a max height for scrolling */
+  overflow-y: auto;
 }
+
+.chart-container {
+  padding-top: 1rem;
+}
+
 .grades-list table {
   width: 100%;
   border-collapse: collapse;
 }
+
 .grades-list th, .grades-list td {
   padding: 0.75rem;
   text-align: left;
   border-bottom: 1px solid #e9ecef;
 }
+
 .grades-list th {
   color: #868e96;
   font-weight: 500;
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: #f8f9fa; /* Match content background */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .semester-details-grid {
+    grid-template-columns: 1fr;
+  }
 }

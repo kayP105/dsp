@@ -1,22 +1,52 @@
 // client/src/features/user/SettingsPage.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../lib/api';
-import './SettingsPage.css'; // We'll create this CSS file
+import './SettingsPage.css';
 
-const initialAvailability = [
-  { day: 'Sunday', hours: 2, startTime: '13:00', endTime: '15:00', enabled: true },
-  { day: 'Monday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
-  { day: 'Tuesday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
-  { day: 'Wednesday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
-  { day: 'Thursday', hours: 2, startTime: '18:00', endTime: '20:00', enabled: true },
-  { day: 'Friday', hours: 4, startTime: '17:00', endTime: '21:00', enabled: true },
-  { day: 'Saturday', hours: 4, startTime: '10:00', endTime: '14:00', enabled: true },
-];
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const SettingsPage = () => {
-  const [availability, setAvailability] = useState(initialAvailability);
+  const [availability, setAvailability] = useState([]);
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch saved availability when the component mounts
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      try {
+        const response = await api.get('/availability');
+        const savedAvailability = response.data;
+        // If user has settings, use them. Otherwise, create default settings.
+        if (savedAvailability && savedAvailability.length > 0) {
+          setAvailability(savedAvailability);
+        } else {
+          // Create a default schedule for new users
+          const defaultAvailability = daysOfWeek.map(day => ({
+            day,
+            startTime: day === 'Saturday' || day === 'Sunday' ? '10:00' : '18:00',
+            endTime: day === 'Saturday' || day === 'Sunday' ? '14:00' : '20:00',
+            enabled: true,
+          }));
+          setAvailability(defaultAvailability);
+        }
+      } catch (error) {
+        console.error("Could not fetch availability", error);
+        // Handle error by setting default availability
+         const defaultAvailability = daysOfWeek.map(day => ({
+            day,
+            startTime: '10:00',
+            endTime: '12:00',
+            enabled: false,
+          }));
+          setAvailability(defaultAvailability);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAvailability();
+  }, []);
+
 
   const handleAvailabilityChange = (index, field, value) => {
     const newAvailability = [...availability];
@@ -26,18 +56,24 @@ const SettingsPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
     try {
-      await api.post('/user/availability', { availability });
+      // Send the availability array directly
+      await api.post('/availability', { availability });
       setMessage('Availability saved successfully!');
     } catch (error) {
       setMessage('Failed to save availability.');
     }
   };
 
+  if (isLoading) {
+    return <div className="card page-fade-in"><p>Loading your schedule...</p></div>;
+  }
+
   return (
     <div className="card page-fade-in">
       <h2>Your Weekly Availability</h2>
-      <p>Set the time windows you are free to study each day.</p>
+      <p>Set the time windows you are free to study each day. The planner will only schedule tasks during these times.</p>
       <form onSubmit={handleSubmit}>
         <div className="availability-grid">
           {availability.map((day, index) => (
