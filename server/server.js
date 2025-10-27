@@ -771,4 +771,5 @@ app.get('/api/planner', async (req, res) => {
 });
  
 // --- SERVER START ---
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));// server/server.js --- FINAL, COMPLETE, AND WORKING VERSION with MongoDB Atlas
+
